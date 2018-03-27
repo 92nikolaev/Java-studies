@@ -37,7 +37,12 @@ public class Controller {
                     view.printSaveResult(saveProperties(model));
                 }
             } else if (command == View.DELETE_COMMAND) {
-                //Do delete
+                //TODO delete
+                if(view.deleteFile(model)){
+                        view.deleteEdit(model);
+                }
+
+
             } else if (command == View.EDIT_COMMAND) {
                 view.printEdit(model);
                 view.printProperties(model);

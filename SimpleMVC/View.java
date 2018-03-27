@@ -2,6 +2,8 @@ package by.lesson13;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Scanner;
 
 public class View {
@@ -86,8 +88,7 @@ public class View {
 
     public boolean deleteFile(Model model) {
         System.out.println("Please confirm delete file: " +
-                model.getPath() + File.separator + model.getFileName()
-                + "(Yes)/(No)");
+                model.getPath() + " (Yes)/(No)");
         String s = scanner.nextLine();
         boolean res;
         if ("Yes".equalsIgnoreCase(s.trim())) {
@@ -98,6 +99,17 @@ public class View {
             res = false;
         }
         return res;
+    }
+
+    public void deleteEdit(Model model){
+        System.out.println("Deleting file "+model.getPath());
+        File file = new File(model.getPath());
+        try {
+            Files.deleteIfExists(file.toPath());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public void printDeleteResult(boolean res) {
