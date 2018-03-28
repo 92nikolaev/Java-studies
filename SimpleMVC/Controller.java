@@ -78,12 +78,16 @@ public class Controller {
     private void loadProperties(Model model) {
         Properties pro = new Properties();
         try {
-            pro.load(new FileInputStream(model.getPath()));
+            FileInputStream fis=new FileInputStream(model.getPath());
+            pro.load(fis);
             model.setProperties(pro);
+            fis.close();
+
         } catch (IOException e) {
             e.printStackTrace();
 
         }
+
     }
 
 }
