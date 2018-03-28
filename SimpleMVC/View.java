@@ -2,6 +2,8 @@ package by.lesson13;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Scanner;
 
 public class View {
@@ -46,24 +48,32 @@ public class View {
 
         switch (s.trim()) {
             case "1": {
+
                 return READ_COMMAND;
+
             }
             case "2": {
+
                 return SAVE_COMMAND;
             }
             case "3": {
+
                 return DELETE_COMMAND;
             }
             case "4": {
+
                 return EDIT_COMMAND;
             }
             case "exit": {
+
                 return EXIT_COMMAND;
             }
             default: {
+
                 return printMainMenu();
             }
         }
+
     }
 
     public boolean saveFile(Model model) {
@@ -86,18 +96,32 @@ public class View {
 
     public boolean deleteFile(Model model) {
         System.out.println("Please confirm delete file: " +
-                model.getPath() + File.separator + model.getFileName()
-                + "(Yes)/(No)");
+                model.getPath() + " (Yes)/(No)");
         String s = scanner.nextLine();
         boolean res;
         if ("Yes".equalsIgnoreCase(s.trim())) {
             System.out.println("Delete confirmed");
             res = true;
+
         } else {
             System.out.println("Delete cancelled");
             res = false;
+
         }
         return res;
+    }
+
+    public void deleteEdit(Model model){
+        System.out.println("Deleting file "+model.getPath());
+        File file = new File(model.getPath());
+        try {
+            //TODO close all scanners!
+            Files.deleteIfExists(file.toPath());
+            printDeleteResult(true);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public void printDeleteResult(boolean res) {
@@ -123,9 +147,11 @@ public class View {
         if("yes".equalsIgnoreCase(yes)){
             model.setProperty(key, value);
             System.out.println("Successfully");
+            scanner.close();
         }
         else {
             System.out.println("Cancelled");
+            scanner.close();
         }
 
     }

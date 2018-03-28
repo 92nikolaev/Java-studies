@@ -24,23 +24,39 @@ public class Controller {
             } else if (command == View.READ_COMMAND) {
                 if (model == null) {
                     model = new Model();
+                    view.readFileName(model);
+                    loadProperties(model);
+                    view.printProperties(model);
                 } else {
-                    ;
-                }  //Do something if model exists already
-                view.readFileName(model);
-                loadProperties(model);
-                view.printProperties(model);
+                    //view.readFileName(model);
+                    loadProperties(model);
+                    view.printProperties(model);
+                }
 
             } else if (command == View.SAVE_COMMAND) {
+                if (model == null) {
+                    view.printMainMenu();
+                }
                 if (view.saveFile(model)) {
                     saveProperties(model);
                     view.printSaveResult(saveProperties(model));
                 }
             } else if (command == View.DELETE_COMMAND) {
-                //Do delete
+                //???
+                if (model == null) {
+                    view.printMainMenu();
+                }
+                if (view.deleteFile(model)) {
+                    view.deleteEdit(model);
+                }
+
             } else if (command == View.EDIT_COMMAND) {
-                view.printEdit(model);
-                view.printProperties(model);
+                if (model == null) {
+                    view.printMainMenu();
+                } else {
+                    view.printEdit(model);
+                    view.printProperties(model);
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
