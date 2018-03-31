@@ -1,11 +1,15 @@
 package by.lesson15.myVersion;
 
-class Banknotes {
+import by.lesson15.Banknote;
+
+class Banknotes  {
     private int numberOf50;
     private int numberOf100;
     private int numberOf20;
     private int numberOf10;
     private int numberOf5;
+    private int totalSum;
+
 
 
     public int getNumberOf50() {
@@ -47,5 +51,17 @@ class Banknotes {
 
     public void setNumberOf5(int numberOf5) {
         this.numberOf5 = numberOf5;
+    }
+
+    public int getTotalSum(){
+
+        int totalSum =
+                5 * numberOf5 +
+                10 * numberOf10 +
+                20 * numberOf20 +
+                50 * numberOf50 +
+                100 * numberOf100;
+
+        return  totalSum;
     }
 }
