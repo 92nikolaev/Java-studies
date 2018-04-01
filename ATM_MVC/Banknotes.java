@@ -1,6 +1,6 @@
 package by.lesson15.myVersion;
 
-import by.lesson15.Banknote;
+
 
 class Banknotes  {
     private int numberOf50;
@@ -8,7 +8,7 @@ class Banknotes  {
     private int numberOf20;
     private int numberOf10;
     private int numberOf5;
-    private int totalSum;
+
 
 
 

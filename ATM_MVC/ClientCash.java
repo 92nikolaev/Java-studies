@@ -7,7 +7,4 @@ public class ClientCash extends Banknotes {
     int give50 = 0;
     int give100 = 0;
     boolean isValid = false;
-
-
-
 }

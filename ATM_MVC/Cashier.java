@@ -1,8 +1,6 @@
 package by.lesson15.myVersion;
 
 public class Cashier extends Controller {
-
-
       Banknotes fillATM(int numberOf5, int numberOf10, int numberOf20, int numberOf50, int numberOf100) {
         Banknotes banknotes = new Banknotes();
         banknotes.setNumberOf5(numberOf5);

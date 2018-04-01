@@ -4,9 +4,20 @@ import by.lesson15.Banknote;
 
 public class Controller {
     Banknotes banknotes;
-    ClientCash clientCash;
-    Cashier cashier;
 
+    public void initialLoad(){
+        Cashier cashier = new Cashier();
+        Banknotes banknotesInATM = cashier.fillATM(100,100,100,50,25);
+        ATM atm = new ATM(banknotesInATM);
+        View view = new View(atm);
+        view.printCashAvailable();
+        Client vasya = new Client(atm);
+    }
+
+
+    public void askCash(){
+
+    }
 
 
     public ClientCash getCash(int value) {
