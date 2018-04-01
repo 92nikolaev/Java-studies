@@ -11,13 +11,9 @@ public class Controller {
         ATM atm = new ATM(banknotesInATM);
         View view = new View(atm);
         view.printCashAvailable();
-        Client vasya = new Client(atm);
+        Client vasya = new Client();
     }
 
-
-    public void askCash(){
-
-    }
 
 
     public ClientCash getCash(int value) {

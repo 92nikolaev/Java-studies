@@ -1,6 +1,5 @@
 package by.lesson15.myVersion;
 
-import by.lesson15.Banknote;
 
 public class ATM extends Banknotes {
     Banknotes banknotes;
