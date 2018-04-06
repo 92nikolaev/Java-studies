@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This is single-line comment, like in HTML -->
+<project>
+    <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>by.pvt</groupId>
+    <artifactId>lessons</artifactId>
+    <packaging>jar</packaging>
+    <version>1.0-SNAPSHOT</version>
+</project>
