@@ -1,4 +1,4 @@
-package by.lesson15.myVersion;
+package com.gmail.slshukevitch;
 
 public class ClientCash extends Banknotes {
     int give5 = 0;

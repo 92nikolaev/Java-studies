@@ -1,6 +1,4 @@
-package by.lesson15.myVersion;
-
-import by.lesson15.Banknote;
+package com.gmail.slshukevitch;
 
 public class Controller {
     Banknotes banknotes;
@@ -26,6 +24,10 @@ public class Controller {
             //if invalid value just return 0
             //and display error
             //then ask client to repeat
+
+            //TODO dynamic solution for all cases!!
+            //https://www.geeksforgeeks.org/dynamic-programming-set-7-coin-change/
+
 
             clientCash.give5 = 0;
             clientCash.give10 = 0;

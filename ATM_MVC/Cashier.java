@@ -1,4 +1,4 @@
-package by.lesson15.myVersion;
+package com.gmail.slshukevitch;
 
 public class Cashier extends Controller {
       Banknotes fillATM(int numberOf5, int numberOf10, int numberOf20, int numberOf50, int numberOf100) {

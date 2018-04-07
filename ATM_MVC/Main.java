@@ -1,6 +1,4 @@
-package by.lesson15.myVersion;
-
-import by.lesson15.Banknote;
+package com.gmail.slshukevitch;
 
 public class Main {
     public static void main(String [] args){
