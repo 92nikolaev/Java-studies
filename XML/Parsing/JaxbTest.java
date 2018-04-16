@@ -20,8 +20,7 @@ public class JaxbTest {
              FileInputStream fis = new FileInputStream("d:/librarium2.xml")/* тот  же файл только продублированный*/) {
             JAXBContext context = JAXBContext.newInstance("by.lesson19"); //только так делаем
             Marshaller marshaller =context.createMarshaller();
-            //шо такое маршаллер блиать
-            //а, во, превращаем объекты в XML
+        
 
             //запиливаем наш скелет всякими пропертями, пользуясь созданными в уроке 19 классами/методами
 
