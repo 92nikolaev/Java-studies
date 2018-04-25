@@ -2,7 +2,7 @@ package by.it.academy;
 
 
 import java.io.*;
-import java.util.Enumeration;
+import java.util.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
@@ -16,6 +16,7 @@ public class MyServlet extends HttpServlet {
             throws IOException, ServletException {
 
         response.setContentType("text/html");
+        response.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
         out.println("<html>");
         out.println("<head>");
@@ -34,13 +35,48 @@ public class MyServlet extends HttpServlet {
         out.println("<h2>DEBUG LEVEL =  "
                 + getServletConfig().getInitParameter("DEBUG_LEVEL"));
 
+        String fio = request.getParameter("fio");
+        String mail = request.getParameter("mail");
+
+        //Print all GET`s
+
+        Enumeration<String> pn = request.getParameterNames();
+        while(pn.hasMoreElements()) {
+            //out.println("<h1> Hey, " + fio + "</h1>");
+            //out.print("<h2> mail: " + mail + "</h2>");
+            String s1 = pn.nextElement();
+            String s2 = request.getParameter(s1);
+            out.print("<h2>"+s1+" " + s2 + "</h2>");
+        }
+
+
+        //COOKIE COOKIE
+
+        Cookie cookie = new Cookie("my_servlet_cookie", "cookie_value");
+        cookie.setMaxAge(24*60*60);
+        response.addCookie(cookie);
+
+        HttpSession session = request.getSession();
+        List<Map> userList = (List)session.getAttribute(USER_LIST);
+        if(userList != null) {
+            for (Map map : userList) {
+                out.println("<h3> user: " + map.toString() + " </h3>");
+            }
+        }
         out.println("</body>");
         out.println("</html>");
     }
 
+    private final static String USER_LIST = "USER_LIST";
+
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
+        //SESSION
+
+
         response.setContentType("text/html");
+        response.setCharacterEncoding("UTF-8");
+        request.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
         out.println("<html>");
         out.println("<head>");
@@ -51,6 +87,36 @@ public class MyServlet extends HttpServlet {
         String mail = request.getParameter("mail");
         out.println("<h1> Hey, " + fio + "</h1>");
         out.print("<h2> mail: " + mail + "</h2>");
+
+
+        Cookie[] cookies = request.getCookies();
+        for(Cookie cookie:cookies){
+            out.println("<h1> This is cookie: "+cookie.getName()+" = "+cookie.getValue()+
+                    " : "+cookie.getMaxAge()+"</h1>");
+        }
+
+        HttpSession session = request.getSession();
+        List<Map> userList =  (List)session.getAttribute("USER_LIST");  //OBJECT
+        if(userList == null){
+            userList = new LinkedList<>();
+        }
+        Enumeration<String> pn = request.getParameterNames();
+        Map<String, String> postParam = null;
+        postParam = new HashMap<>();
+        while(pn.hasMoreElements()) {
+            //out.println("<h1> Hey, " + fio + "</h1>");
+            //out.print("<h2> mail: " + mail + "</h2>");
+
+            String s1 = pn.nextElement();
+            String s2 = request.getParameter(s1);
+            postParam.put(s1,s2);
+            out.print("<h2>"+s1+" " + s2 + "</h2>");
+        }
+
+        if(postParam.size()>0){
+            userList.add(postParam);
+        }
+        session.setAttribute(USER_LIST, userList);
         out.println("</body>");
         out.println("</html>");
     }
