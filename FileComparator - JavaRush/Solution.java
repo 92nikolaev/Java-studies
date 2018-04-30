@@ -21,7 +21,7 @@ public class Solution {
         reader.close();
 
         sorterByExtension(files);
-        //System.out.println(files);
+        System.out.println(files);
         File fileEnd = new File((files.get(0).getAbsolutePath()).split(".part")[0]);
 
         for(int i=0; i<files.size();i++){
@@ -46,16 +46,16 @@ public class Solution {
             return (ArrayList) list;
     }
 
-    public static String getExtension(File file){
+    public static int getExtension(File file){
         String filename=file.getName();
-        return filename.split("\\.(?=[^\\.]+$)")[1];
+        return Integer.parseInt((filename.split("\\.(?=[^\\.]+$)")[1]).substring(4));
     }
 
     static class Sort implements Comparator<File>{
 
         @Override
         public int compare(File o1, File o2) {
-            return getExtension(o1).compareTo(getExtension(o2));
+            return getExtension(o1)-(getExtension(o2));
         }
     }
 }
