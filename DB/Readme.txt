@@ -1,1 +1,1 @@
-JDBC stuff
+JDBC, Servlets, JSP, REST examples
