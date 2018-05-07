@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2016 rel. 2 sp1 (x64) (http://www.altova.com) by Unitary enterprise velcom (Unitary enterprise velcom) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" elementFormDefault="qualified" attributeFormDefault="unqualified" vc:minVersion="1.1">
+	<xs:element name="user">
+		<xs:annotation>
+			<xs:documentation>Web shop user</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element name="id" nillable="false">
+					<xs:simpleType>
+						<xs:restriction base="xs:int">
+							<xs:minInclusive value="1"/>
+							<xs:maxInclusive value="1000000"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="login-name" type="xs:string" nillable="false"/>
+				<xs:element name="status">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="ACTIVE"/>
+							<xs:enumeration value="DISABLED"/>
+							<xs:enumeration value="BLOCKED"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="created_date" type="xs:dateTime"/>
+				<xs:element name="last-login-date" type="xs:dateTime"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="user-data">
+		<xs:annotation>
+			<xs:documentation>Main user data</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element name="id" nillable="false">
+					<xs:simpleType>
+						<xs:restriction base="xs:int">
+							<xs:minInclusive value="1"/>
+							<xs:maxInclusive value="1000000"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element ref="user"/>
+				<xs:element name="created_date" type="xs:dateTime" nillable="false"/>
+				<xs:element name="status" type="xs:string"/>
+				<xs:element name="password" type="xs:string"/>
+				<xs:element name="first-name" type="xs:string"/>
+				<xs:element name="second-name" type="xs:string"/>
+				<xs:element name="email" type="xs:string"/>
+				<xs:element name="mobile-phone" type="xs:string"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="role">
+		<xs:annotation>
+			<xs:documentation>User role: client, sales manager, admin </xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element name="id" nillable="false">
+					<xs:simpleType>
+						<xs:restriction base="xs:int">
+							<xs:minInclusive value="1"/>
+							<xs:maxInclusive value="1000000"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="role-name" type="xs:string" nillable="false"/>
+				<xs:element name="created_date" type="xs:dateTime" nillable="false"/>
+				<xs:element name="status" type="xs:string"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="user-role">
+		<xs:annotation>
+			<xs:documentation>Mapping user to exact role</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="user"/>
+				<xs:element ref="role"/>
+				<xs:element name="id" nillable="false">
+					<xs:simpleType>
+						<xs:restriction base="xs:int">
+							<xs:minInclusive value="1"/>
+							<xs:maxInclusive value="1000000"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="created_date" type="xs:dateTime" nillable="false"/>
+				<xs:element name="status" type="xs:string"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="order">
+		<xs:annotation>
+			<xs:documentation>Order of products made by user</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="id" nillable="false">
+					<xs:simpleType>
+						<xs:restriction base="xs:int">
+							<xs:minInclusive value="1"/>
+							<xs:maxInclusive value="1000000"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="created_date" type="xs:dateTime"/>
+				<xs:element name="status" type="xs:string"/>
+				<xs:element ref="order-item" minOccurs="1" maxOccurs="unbounded"/>
+				<xs:element ref="user-data"/>
+				<xs:element name="delivery-address" type="xs:string"/>
+				<xs:element name="delivery-date" type="xs:dateTime"/>
+				<xs:element name="total-amount" type="xs:double"/>
+				<xs:element ref="payment"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="product">
+		<xs:annotation>
+			<xs:documentation>Products for eshop catalog</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element name="id" nillable="false">
+					<xs:simpleType>
+						<xs:restriction base="xs:int">
+							<xs:minInclusive value="1"/>
+							<xs:maxInclusive value="1000000"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="created_date" type="xs:dateTime" nillable="false"/>
+				<xs:element name="name" type="xs:string" nillable="false"/>
+				<xs:element name="description" type="xs:string"/>
+				<xs:element name="image" type="xs:base64Binary"/>
+				<xs:element name="price" type="xs:double"/>
+				<xs:element name="status" type="xs:string"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="order-item">
+		<xs:annotation>
+			<xs:documentation>Represents one position in the order of concrete product type</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element name="id" nillable="false">
+					<xs:simpleType>
+						<xs:restriction base="xs:int">
+							<xs:minInclusive value="1"/>
+							<xs:maxInclusive value="1000000"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="created_date" type="xs:dateTime"/>
+				<xs:element name="status" type="xs:string"/>
+				<xs:element ref="product"/>
+				<xs:element name="quantaty">
+					<xs:simpleType>
+						<xs:restriction base="xs:int">
+							<xs:minInclusive value="1"/>
+							<xs:maxInclusive value="10"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="review">
+		<xs:annotation>
+			<xs:documentation>Product review and customer feedback</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element name="id" nillable="false">
+					<xs:simpleType>
+						<xs:restriction base="xs:int">
+							<xs:minInclusive value="1"/>
+							<xs:maxInclusive value="1000000"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element ref="user-data"/>
+				<xs:element name="created_date" type="xs:dateTime" nillable="false"/>
+				<xs:element name="status" type="xs:string"/>
+				<xs:element name="text" type="xs:string"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="payment">
+		<xs:annotation>
+			<xs:documentation>Payment type</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element name="id" nillable="false">
+					<xs:simpleType>
+						<xs:restriction base="xs:int">
+							<xs:minInclusive value="1"/>
+							<xs:maxInclusive value="1000000"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="payment-type" type="xs:string"/>
+				<xs:element name="created_date" type="xs:dateTime" nillable="false"/>
+				<xs:element name="status" type="xs:string"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
