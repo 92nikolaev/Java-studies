@@ -1,5 +1,9 @@
 package com.gmail.slshukevitch.project.WEB;
 
+import com.gmail.slshukevitch.project.DAO.Model.UserData;
+import com.gmail.slshukevitch.project.DAO.Database.DaoFactory;
+
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -8,34 +12,32 @@ import java.io.IOException;
 
 public class LoginActionServlet extends HttpServlet {
     @Override
-    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-        resp.setContentType("test/html");
+    public void doPost(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+        resp.setContentType("text/html");
         resp.setCharacterEncoding("UTF-8");
         req.setCharacterEncoding("UTF-8");
 
         String login = req.getParameter("login");
-        String password = req.getParameter("password"); //somewhere in database
+        String password = req.getParameter("password");
+        System.out.println("login "+login);
+        System.out.println("password "+password);
 
-        if (login == null || "".equals(login)) {
-            //TODO: call database;
-            //любой путь мб, поэтому получаем, без хардкода
-            resp.sendRedirect(getServletContext().getContextPath() + "/login_error.html");
+        //Connection to DB
+
+
+       UserData userData = DaoFactory.getInstance().getUseDataDao().readUserData(login);
+
+        if (login == null || !password.equals(userData.getPassword())) {
+
+            resp.sendRedirect(getServletContext().getContextPath()
+                    + "/login_error.html");
         }
-        //This is Bean
         else {
-
-            //some random values just for debugging
-
-            UserData userData = new UserData();
-            userData.setFirstName("Ivan");
-            userData.setSecondName("Ivanov");
-            userData.setLogin("vanya14");
-
             req.getSession().setAttribute("userData", userData);
-            getServletContext().getRequestDispatcher("/login_ok.html").forward(req, resp);
-
+            getServletContext().getRequestDispatcher(
+                    "/login_ok.html").forward(req, resp);
         }
-
     }
 
 }

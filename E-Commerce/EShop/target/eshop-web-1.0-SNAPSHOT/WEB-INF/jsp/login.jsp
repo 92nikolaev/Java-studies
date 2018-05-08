@@ -13,22 +13,22 @@
 <div class="container">
     <nav class="navbar navbar-light bg-light">
         <a class="navbar-brand" href="#">Интернет-магазин</a>
-        <a class="nav-link active" href="/test/index.html">Главная</a>
-        <a class="nav-link" href="/test/catalog.html">Каталог</a>
-        <a class="nav-link" href="/test/index.html">Заказы</a>
-        <a class="nav-link" href="/test/index.html">О компании</a>
-        <a class="nav-link" href="/test/index.html">Регистрация</a>
-        <a class="nav-link" href="/test/login.html">Войти</a>
+        <a class="nav-link active" href="/project/index.html">Главная</a>
+        <a class="nav-link" href="/project/catalog.html">Каталог</a>
+        <a class="nav-link" href="/project/index.html">Заказы</a>
+        <a class="nav-link" href="/project/index.html">О компании</a>
+        <a class="nav-link" href="/project/index.html">Регистрация</a>
+        <a class="nav-link" href="/project/login.html">Войти</a>
     </nav>
     <div class="jumbotron text-center">
         <p class="h4">Войти</p>
         <p class="lead">Для того, чтобы войти в наш магазин, введите имя пользователя и пароль.</p>
         <hr/>
         <p>Если у вас еще нет имени пользователя и пароля - пройдете регистрацию.</p>
-        <a class="btn btn-primary" href="/test/index.html" role="button">Регистрация</a>
+        <a class="btn btn-primary" href="/project/index.html" role="button">Регистрация</a>
     </div>
 
-    <form action="/test/login_action" method="post" onclick="">
+    <form action="/project/login_action" method="post" onclick="">
         <div class="form-group">
             <label>Имя пользователя:</label>
             <input name="login" type="text" class="form-control" placeholder="логин" autofocus/>

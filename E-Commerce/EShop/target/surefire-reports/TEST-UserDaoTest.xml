@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="3" failures="0" name="UserDaoTest" time="0.202" errors="0" skipped="0">
+<testsuite tests="3" failures="0" name="UserDaoTest" time="0.199" errors="0" skipped="0">
   <properties>
     <property name="idea.version" value="2017.3.4"/>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
@@ -62,7 +62,7 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="UserDaoTest" name="testReadUserbyId" time="0.192"/>
+  <testcase classname="UserDaoTest" name="testReadUserbyId" time="0.19"/>
   <testcase classname="UserDaoTest" name="testCreateUser" time="0.002"/>
-  <testcase classname="UserDaoTest" name="testReadUserByName" time="0.008"/>
+  <testcase classname="UserDaoTest" name="testReadUserByName" time="0.007"/>
 </testsuite>

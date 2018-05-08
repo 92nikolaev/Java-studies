@@ -13,12 +13,12 @@
 <div class="container">
     <nav class="navbar navbar-light bg-light">
         <a class="navbar-brand" href="#">Интернет-магазин</a>
-        <a class="nav-link active" href="/test/index.html">Главная</a>
-        <a class="nav-link" href="/test/index.html">Каталог</a>
-        <a class="nav-link" href="/test/index.html">Заказы</a>
-        <a class="nav-link" href="/test/index.html">О компании</a>
-        <a class="nav-link" href="/test/index.html">Регистрация</a>
-        <a class="nav-link" href="/test/login.html">Войти</a>
+        <a class="nav-link active" href="/project/index.html">Главная</a>
+        <a class="nav-link" href="/project/index.html">Каталог</a>
+        <a class="nav-link" href="/project/index.html">Заказы</a>
+        <a class="nav-link" href="/project/index.html">О компании</a>
+        <a class="nav-link" href="/project/index.html">Регистрация</a>
+        <a class="nav-link" href="/project/login.html">Войти</a>
     </nav>
 
 
@@ -27,7 +27,7 @@
         <p class="lead">Имя пользователя или пароль указаны неверно.</p>
         <hr/>
         <p>Если у вас ещё нет имени пользователя и пароля - пройдите регистрацию.</p>
-        <a class="btn btn-primary" href="/test/index.html" role="button">Регистрация</a>
+        <a class="btn btn-primary" href="/project/index.html" role="button">Регистрация</a>
     </div>
 
 
