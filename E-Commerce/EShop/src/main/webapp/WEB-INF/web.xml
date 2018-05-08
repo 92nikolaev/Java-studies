@@ -37,7 +37,7 @@
 
     <servlet>
         <servlet-name>LoginActionServlet</servlet-name>
-        <servlet-class>com.gmail.slshukevitch.project.LoginActionServlet</servlet-class>
+        <servlet-class>com.gmail.slshukevitch.project.WEB.LoginActionServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -48,7 +48,7 @@
 
     <servlet>
         <servlet-name>CatalogServlet</servlet-name>
-        <servlet-class>com.gmail.slshukevitch.project.CatalogServlet</servlet-class>
+        <servlet-class>com.gmail.slshukevitch.project.WEB.CatalogServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
