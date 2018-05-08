@@ -19,6 +19,10 @@ public class UserDataDaoTest {
         assertNotNull(userData);
         assertEquals(userData.getPassword(), "password");
 
+        UserData userData2 = userDataDao.readUserData("user3");
+        assertNotNull(userData2);
+        assertEquals(userData2.getPassword(), "password123");
+
     }
 
 

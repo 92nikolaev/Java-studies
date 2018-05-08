@@ -31,7 +31,8 @@
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="cf79dedf-5070-484c-8bfa-e7478483efca">
-      <console name="Connection" type="STANDARD"><![CDATA[select max(id) max_id, ud.* from eshop_database.user_data ud where ud.user_id=1]]></console>
+      <console name="Connection" type="STANDARD"><![CDATA[select max(id) max_id, ud.* from eshop_database.user_data ud where ud.user_id=1
+select * from eshop_database.user_data]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
