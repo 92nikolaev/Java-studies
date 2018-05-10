@@ -82,7 +82,7 @@
     </context-param>
     <context-param>
         <param-name>DATABASE_PASSWORD</param-name>
-        <param-value>rand47925</param-value>
+        <param-value>pass</param-value>
     </context-param>
 
 </web-app>
