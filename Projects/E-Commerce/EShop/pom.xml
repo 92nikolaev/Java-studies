@@ -67,7 +67,7 @@
                     <url>jdbc:mysql://localhost:3306/mysql?useSSL=false</url>
                     <username>root</username>
                     <!-- Check your password -->
-                    <password>pass</password>
+                    <password>rand47925</password>
                 </configuration>
             </plugin>
 
