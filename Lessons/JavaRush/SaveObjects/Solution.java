@@ -99,15 +99,12 @@ public class Solution {
                 vasya.name = name;
 
                 try{
-                String asset1Name = temp[1].split(" ")[0];
-                Double asset1Value = Double.parseDouble(temp[1].split(" ")[1]);
-                String asset2Name = temp[2].split(" ")[0];
-                Double asset2Value = Double.parseDouble(temp[2].split(" ")[1]);
-
-                Asset asset1 = new Asset(asset1Name, asset1Value);
-                Asset asset2 = new Asset(asset2Name, asset2Value);
-                vasya.assets.add(asset1);
-                vasya.assets.add(asset2);
+                    for(int i=0; i<temp.length;i++) {
+                        String assetName = temp[i].split(" ")[0];
+                        Double assetValue = Double.parseDouble(temp[i].split(" ")[1]);
+                        Asset assetI=new Asset(assetName, assetValue);
+                        vasya.assets.add(assetI);
+                    }
             }
                 catch (ArrayIndexOutOfBoundsException e){
                     return vasya;
