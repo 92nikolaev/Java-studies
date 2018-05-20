@@ -18,13 +18,16 @@ public class Solution {
             OutputStream outputStream = new FileOutputStream(your_file_name);
             InputStream inputStream = new FileInputStream(your_file_name);
 
-            Human ivanov = new Human("Ivanov", new Asset("home", 999_999.99), new Asset("car", 2999.99));
+            Human ivanov = new Human("Ivanov",new Asset("home", 999_999.99), new Asset("car", 2999.99));
             ivanov.save(outputStream);
             outputStream.flush();
 
             Human somePerson = Human.load(inputStream);
-
+            inputStream.close();
+            outputStream.close();
             if(somePerson.equals(ivanov)) System.out.print("ok");
+            else System.out.print("not ok");
+
             //check here that ivanov equals to somePerson - проверьте тут, что ivanov и somePerson равны
 
         } catch (IOException e) {
@@ -74,28 +77,43 @@ public class Solution {
         }
 
         public void save(OutputStream outputStream) throws Exception {
+
             outputStream.write((name+"\n").getBytes());
-            for(Asset el:assets){
-                outputStream.write(el.getName().getBytes());
-                outputStream.write( el.getPrice().getBytes());
+            if(assets.size()!=0) {
+                for (Asset el : assets) {
+                    outputStream.write(el.getName().getBytes());
+                    outputStream.write(el.getPrice().getBytes());
+                }
             }
         }
 
         public static Human load(InputStream inputStream) throws Exception {
             Scanner s = new Scanner(inputStream).useDelimiter("\\A");
-            String result = s.hasNext() ? s.next() : "";
-            String[]temp=result.split("\n");
-            String name=temp[0];
-            String asset1Name=temp[1].split(" ")[0];
-            Double asset1Value=Double.parseDouble(temp[1].split(" ")[1]);
-            String asset2Name=temp[2].split(" ")[0];
-            Double asset2Value=Double.parseDouble(temp[2].split(" ")[1]);
-            Human vasya=new Human();
-            vasya.name=name;
-            Asset asset1=new Asset(asset1Name, asset1Value);
-            Asset asset2=new Asset(asset2Name, asset2Value);
-            vasya.assets.add(asset1);
-            vasya.assets.add(asset2);
+            Human vasya = new Human();
+
+
+            while(inputStream.available()>0) {
+                String result = s.hasNext() ? s.next() : "";
+                String[] temp = result.split("\n");
+                String name = temp[0];
+                vasya.name = name;
+
+                try{
+                String asset1Name = temp[1].split(" ")[0];
+                Double asset1Value = Double.parseDouble(temp[1].split(" ")[1]);
+                String asset2Name = temp[2].split(" ")[0];
+                Double asset2Value = Double.parseDouble(temp[2].split(" ")[1]);
+
+                Asset asset1 = new Asset(asset1Name, asset1Value);
+                Asset asset2 = new Asset(asset2Name, asset2Value);
+                vasya.assets.add(asset1);
+                vasya.assets.add(asset2);
+            }
+                catch (ArrayIndexOutOfBoundsException e){
+                    return vasya;
+            }
+
+            }
             return vasya;
         }
     }
