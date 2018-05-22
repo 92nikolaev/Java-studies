@@ -16,7 +16,7 @@ public class Solution {
     public static List<LineItem> lines = new ArrayList<LineItem>();
 
     public static void main(String[] args) throws IOException {
-        /*
+/*
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
         String filename1 = reader.readLine();
@@ -24,6 +24,7 @@ public class Solution {
 
         reader.close();
 */
+
         String filename1 = "d:/inf.txt";
         String filename2 = "d:/inf2.txt";
 
@@ -46,7 +47,17 @@ public class Solution {
         }
         buffReader2.close();
 
+        /*
+        if(lines2.size()>lines1.size()){
+            List<String> tmpList = new ArrayList<String>(lines1);
+            lines1.clear();
+            lines1.addAll(lines2);
+            lines2.clear();
+            lines2.addAll(tmpList);
+        }
+        */
 
+//TODO last line
 
         for (int i = 0; i < lines1.size(); i++) {
         try {
@@ -55,23 +66,25 @@ public class Solution {
                 lines2.remove(lines2.get(0));
 
             } else if (lines1.get(i).equals(lines2.get(1))) {
-                lines.add(new LineItem(Type.ADDED, lines1.get(1)));
+                lines.add(new LineItem(Type.ADDED, lines2.get(0)));
                 i--;
                 lines2.remove(lines2.get(0));
 
             } else {
                 lines.add(new LineItem(Type.REMOVED, lines1.get(i)));
-
             }
         }catch ( IndexOutOfBoundsException e){
-            lines.add(new LineItem(Type.REMOVED, lines1.get(i)));
+            /*
+            if(lines1.get(i)==null) break;
+            else lines.add(new LineItem(Type.REMOVED, lines1.get(i)));
+            */
         }
 
         }
 
 
         for (LineItem lineItem : lines) {
-            System.out.println(lineItem.type);
+            System.out.println(lineItem.type+" @ "+lineItem.line);
         }
 
     }
