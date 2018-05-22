@@ -11,21 +11,23 @@ import java.util.Scanner;
 Читаем и пишем в файл: Human
 */
 public class Solution {
-    public static void main(String[] args)  {
+    public static void main(String[] args) {
         //исправьте outputStream/inputStream в соответствии с путем к вашему реальному файлу
         try {
             File your_file_name = File.createTempFile("D:/log.txt", null);
             OutputStream outputStream = new FileOutputStream(your_file_name);
             InputStream inputStream = new FileInputStream(your_file_name);
 
-            Human ivanov = new Human("Ivanov",new Asset("home", 999_999.99), new Asset("car", 2999.99));
+            Human ivanov = new Human("Ivanov", new Asset("home", 999_999.99), new Asset("car", 2999.99));
             ivanov.save(outputStream);
             outputStream.flush();
 
-            Human somePerson = Human.load(inputStream);
+            Human somePerson = new Human();
+            somePerson.load(inputStream);
+            ;
             inputStream.close();
             outputStream.close();
-            if(somePerson.equals(ivanov)) System.out.print("ok");
+            if (somePerson.equals(ivanov)) System.out.print("ok");
             else System.out.print("not ok");
 
             //check here that ivanov equals to somePerson - проверьте тут, что ivanov и somePerson равны
@@ -55,7 +57,6 @@ public class Solution {
         }
 
 
-
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;
@@ -78,8 +79,8 @@ public class Solution {
 
         public void save(OutputStream outputStream) throws Exception {
 
-            outputStream.write((name+"\n").getBytes());
-            if(assets.size()!=0) {
+            outputStream.write((name + "\n").getBytes());
+            if (assets != null) {
                 for (Asset el : assets) {
                     outputStream.write(el.getName().getBytes());
                     outputStream.write(el.getPrice().getBytes());
@@ -87,29 +88,27 @@ public class Solution {
             }
         }
 
-        public static Human load(InputStream inputStream) throws Exception {
+        public Human load(InputStream inputStream) throws Exception {
             Scanner s = new Scanner(inputStream).useDelimiter("\\A");
             Human vasya = new Human();
+            while (inputStream.available() > 0) {
 
-
-            while(inputStream.available()>0) {
                 String result = s.hasNext() ? s.next() : "";
                 String[] temp = result.split("\n");
                 String name = temp[0];
                 vasya.name = name;
-
-                try{
-                    for(int i=0; i<temp.length;i++) {
-                        String assetName = temp[i].split(" ")[0];
-                        Double assetValue = Double.parseDouble(temp[i].split(" ")[1]);
-                        Asset assetI=new Asset(assetName, assetValue);
-                        vasya.assets.add(assetI);
+                if (assets != null) {
+                    try {
+                        for (int i = 1; i < temp.length; i++) {
+                            String assetName = temp[i].split(" ")[0];
+                            Double assetValue = Double.parseDouble(temp[i].split(" ")[1]);
+                            Asset assetI = new Asset(assetName, assetValue);
+                            vasya.assets.add(assetI);
+                        }
+                    } catch (ArrayIndexOutOfBoundsException e) {
+                        e.printStackTrace();
                     }
-            }
-                catch (ArrayIndexOutOfBoundsException e){
-                    return vasya;
-            }
-
+                }
             }
             return vasya;
         }
