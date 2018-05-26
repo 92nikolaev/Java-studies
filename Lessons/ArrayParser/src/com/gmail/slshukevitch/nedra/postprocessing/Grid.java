@@ -3,7 +3,6 @@ package com.gmail.slshukevitch.nedra.postprocessing;
 import java.io.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -11,14 +10,14 @@ class Grid {
     public List<Double> OX = new ArrayList<>();
     public List<Double> OY = new ArrayList<>();
     public List<Double> OZ = new ArrayList<>();
-    public List<Integer> N = new ArrayList<>();  //node number
 
     //some separation values just for test
-    //couple - 2 coords stored in every cell of 2d array
-    int Xsep = 10;
-    int Ysep = 10;
-
+    int Xsep = 3;
+    int Ysep = 3;
+    //List for keeping grid elements
     List<Double[]> grid = new ArrayList<>();
+    //list for keeping elements which are closest to the grid
+    List<List> elements = new ArrayList<>();
 
     private Grid(String filename) {
         try {
@@ -27,7 +26,7 @@ class Grid {
             String line;
             while ((line = bufferedReader.readLine()) != null) {
                 String[] temp = line.split(" ");
-                N.add(Integer.parseInt(temp[0]));  //always comes first
+
                 OX.add(Double.valueOf(temp[1]));
                 OY.add(Double.valueOf(temp[2]));
                 OZ.add(Double.valueOf(temp[3]));
@@ -40,7 +39,7 @@ class Grid {
                 }
             }
 
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -56,29 +55,54 @@ class Grid {
         double Ycoord = Ymin;
 
         //steps for X and Y lateral coordinates
-        double Xstep = Math.abs((Xmax - Xmin) / Xsep);
-        double Ystep = Math.abs((Ymax - Ymin) / Ysep);
+        double Xstep;
+        double Ystep;
 
         //works only for rectangular grid with sides parallel with X/Y axis!
 
-        for(int i=0; i<Xsep;i++){
+        for (int i = 0; i <= Xsep; i++) {
+            //grid should be filled from the very beginning (x0_grid=xmin_mesh) of the mesh, so the first step is 0
+            if (i == 0) {
+                Xstep = 0;
+            } else {
+                Xstep = Math.abs((Xmax - Xmin) / Xsep);
+            }
             Xcoord = Xcoord + Xstep;
-            for(int j=0; j<Ysep;j++){
+            Ycoord = Ymin;  //reset in outer loop
+            for (int j = 0; j <= Ysep; j++) {
+                if (j == 0) {
+                    Ystep = 0;
+                } else {
+                    Ystep = Math.abs((Ymax - Ymin) / Ysep);
+                }
                 Ycoord = Ycoord + Ystep;
-                Double[]temp= new Double[]{Xcoord, Ycoord};
+                Double[] temp = new Double[]{Xcoord, Ycoord};
                 grid.add(temp);
+
             }
         }
-/*
-        for (Double[] el : grid) {
-            System.out.println(el[0] + "@" + el[1]);
-        }
-        */
 
     }
-    //TODO implement method which finds nearest node number to the grid point
+
+    //TODO dist() method - to find distance betweeen points on 2d plane
 
     private void fitToMesh() {
+        //initial values for comparison
+        double minX = 1.0;
+        double minY = 1.0;
+
+        //every element in "elements" list is a couple of coordinates X and Y
+        List<Double> couple = new ArrayList<>();
+
+        //iterate through all grid, use the simplest linear search
+
+        //https://en.wikipedia.org/wiki/Closest_pair_of_points_problem +
+        //https://en.wikipedia.org/wiki/Nearest_neighbor_search
+
+        for (Double[] el : grid) {
+
+
+        }
 
     }
 
@@ -86,6 +110,17 @@ class Grid {
 
         Grid grid = new Grid("D:/mesh_auto_lin_2TEST.dat");  //any path to file
         grid.createGrid();
+
+        for (Double[] el : grid.grid) {
+            System.out.println(el[0] + " @ " + el[1]);
+        }
+
+        grid.fitToMesh();
+
+        for (List el : grid.elements) {
+            System.out.println(el+"@");
+        }
+
 
 
     }
