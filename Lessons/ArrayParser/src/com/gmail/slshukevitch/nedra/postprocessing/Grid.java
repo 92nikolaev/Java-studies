@@ -16,8 +16,6 @@ class Grid {
     //List for keeping grid elements
     List<Double[]> grid = new ArrayList<>();
     Map<Integer, HashMap> pointsTree = new HashMap<>();
-    Map<Integer, Integer> gridToNodes = new HashMap<>();
-
 
     private Grid(String filename) {
         try {
@@ -57,6 +55,7 @@ class Grid {
         double Ystep;
 
         //works only for rectangular grid with sides parallel with X/Y axis!
+
         for (int i = 0; i <= Xsep; i++) {
             //grid should be filled from the very beginning (x0_grid=xmin_mesh) of the mesh, so the first step is 0
             if (i == 0) {
@@ -78,6 +77,7 @@ class Grid {
             }
         }
         //copy values from OX, OY, OZ to points list
+
         for (int j = 0; j < OX.size(); j++) {
             Double[] coord = new Double[3];
             coord[0] = OX.get(j);
@@ -91,9 +91,12 @@ class Grid {
     }
 
     private void fitToMesh() {
-        //iterate through all grid, use the simplest linear search
+
+        //iterate through all grid, use the simplest bruteforce search
+        //this may cause performance issue, i.e. for every grid point we iterate through ALL nodes
+        //possible solution is https://en.wikipedia.org/wiki/Closest_pair_of_points_problem divide&conquer approach
+
         for (int k = 0; k < grid.size(); k++) {  //grid.size()
-            //System.out.println("This is Grid element #" + (k + 1) + ": " + grid.get(k)[0] + "@" + grid.get(k)[1]);
             HashMap<Integer, Double> nodeDistance = new HashMap<>();
             for (int i = 0; i < points.size(); i++) {
                 double temp = dist(grid.get(k)[0], points.get(i)[0], grid.get(k)[1], points.get(i)[1]);
