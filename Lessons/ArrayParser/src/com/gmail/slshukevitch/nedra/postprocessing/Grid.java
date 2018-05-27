@@ -11,8 +11,8 @@ class Grid {
     //List for keeping points "as is" - every element is 3-component Array of X,Y and Z coordinates
     public List<Double[]> points = new ArrayList<>();
     //some separation values for grid just for test
-    private int Xsep = 100;
-    private int Ysep = 100;
+    private int Xsep = 3;
+    private int Ysep = 3;
     //List for keeping grid elements
     List<Double[]> grid = new ArrayList<>();
     Map<Integer, HashMap> pointsTree = new HashMap<>();
@@ -96,7 +96,7 @@ class Grid {
         //this may cause performance issue, i.e. for every grid point we iterate through ALL nodes
         //possible solution is https://en.wikipedia.org/wiki/Closest_pair_of_points_problem divide&conquer approach
 
-        for (int k = 0; k < grid.size(); k++) {  //grid.size()
+        for (int k = 0; k < grid.size(); k++) {
             HashMap<Integer, Double> nodeDistance = new HashMap<>();
             for (int i = 0; i < points.size(); i++) {
                 double temp = dist(grid.get(k)[0], points.get(i)[0], grid.get(k)[1], points.get(i)[1]);
@@ -104,8 +104,11 @@ class Grid {
                 pointsTree.put(k + 1, (nodeDistance));
             }
         }
+
+
+
         for (int i = 1; i < grid.size() + 1; i++) {  //iterate via Keys aka Point number to get grid points
-            Map<Integer, Double> map = pointsTree.get(i);
+            HashMap<Integer, Double> map = pointsTree.get(i);
             List<Double> lengthSet = new ArrayList<>();
             //for every point we obtain set of nodes and their distance to grid point
             for (Double value : map.values()) {
@@ -114,7 +117,10 @@ class Grid {
             Collections.sort(lengthSet);
 
             double minLength = lengthSet.get(0);  //minimum length to nearest node for current grid point
+            lengthSet.clear();
             int nodeNumber = getNumber(map, minLength);  //node number
+            System.out.println(nodeNumber+"@"+minLength);
+
         }
 
     }
@@ -124,12 +130,11 @@ class Grid {
     }
 
     private int getNumber(Map<Integer, Double> map, Double value) {
-        int key = 0;
-        value = 0.0d;
+        int key=0;
         for (Map.Entry<Integer, Double> entry : map.entrySet()) {
             if (value.equals(entry.getValue())) {
                 key = entry.getKey();
-                break;
+                return key;
             }
         }
         return key;
