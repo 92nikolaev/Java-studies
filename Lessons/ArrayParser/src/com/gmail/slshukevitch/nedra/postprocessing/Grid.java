@@ -11,11 +11,12 @@ class Grid {
     //List for keeping points "as is" - every element is 3-component Array of X,Y and Z coordinates
     public List<Double[]> points = new ArrayList<>();
     //some separation values for grid just for test
-    private int Xsep = 3;
-    private int Ysep = 3;
+    private int Xsep = 100;
+    private int Ysep = 100;
     //List for keeping grid elements
     List<Double[]> grid = new ArrayList<>();
     Map<Integer, HashMap> pointsTree = new HashMap<>();
+    Map<Integer, Integer> gridToNodes = new HashMap<>();
 
 
     private Grid(String filename) {
@@ -45,22 +46,17 @@ class Grid {
     }
 
     private void createGrid() {
-
-
         double Xmax = Collections.max(OX);
         double Xmin = Collections.min(OX);
         double Ymax = Collections.max(OY);
         double Ymin = Collections.min(OY);
-
         double Xcoord = Xmin;
         double Ycoord = Ymin;
-
         //steps for X and Y lateral coordinates
         double Xstep;
         double Ystep;
 
         //works only for rectangular grid with sides parallel with X/Y axis!
-
         for (int i = 0; i <= Xsep; i++) {
             //grid should be filled from the very beginning (x0_grid=xmin_mesh) of the mesh, so the first step is 0
             if (i == 0) {
@@ -79,10 +75,8 @@ class Grid {
                 Ycoord = Ycoord + Ystep;
                 Double[] temp = new Double[]{Xcoord, Ycoord};
                 grid.add(temp);
-
             }
         }
-
         //copy values from OX, OY, OZ to points list
         for (int j = 0; j < OX.size(); j++) {
             Double[] coord = new Double[3];
@@ -91,50 +85,57 @@ class Grid {
             coord[2] = OZ.get(j);
             points.add(coord);
         }
-
         OX.clear();
         OY.clear();
         OZ.clear();
     }
 
-
     private void fitToMesh() {
         //iterate through all grid, use the simplest linear search
-
-        for (int k = 0; k < 5; k++) {  //grid.size()
+        for (int k = 0; k < grid.size(); k++) {  //grid.size()
             //System.out.println("This is Grid element #" + (k + 1) + ": " + grid.get(k)[0] + "@" + grid.get(k)[1]);
             HashMap<Integer, Double> nodeDistance = new HashMap<>();
             for (int i = 0; i < points.size(); i++) {
                 double temp = dist(grid.get(k)[0], points.get(i)[0], grid.get(k)[1], points.get(i)[1]);
                 nodeDistance.put((i + 1), temp);
-                pointsTree.put(k+1, (nodeDistance));
+                pointsTree.put(k + 1, (nodeDistance));
             }
         }
+        for (int i = 1; i < grid.size() + 1; i++) {  //iterate via Keys aka Point number to get grid points
+            Map<Integer, Double> map = pointsTree.get(i);
+            List<Double> lengthSet = new ArrayList<>();
+            //for every point we obtain set of nodes and their distance to grid point
+            for (Double value : map.values()) {
+                lengthSet.add(value);    //copy all values in some List
+            }
+            Collections.sort(lengthSet);
 
+            double minLength = lengthSet.get(0);  //minimum length to nearest node for current grid point
+            int nodeNumber = getNumber(map, minLength);  //node number
+        }
 
     }
-
 
     private double dist(double x1, double x2, double y1, double y2) {
         return Math.sqrt(((x2 - x1) * (x2 - x1)) + ((y2 - y1) * (y2 - y1)));
     }
 
+    private int getNumber(Map<Integer, Double> map, Double value) {
+        int key = 0;
+        value = 0.0d;
+        for (Map.Entry<Integer, Double> entry : map.entrySet()) {
+            if (value.equals(entry.getValue())) {
+                key = entry.getKey();
+                break;
+            }
+        }
+        return key;
+    }
 
     public static void main(String[] args) {
-
         Grid grid = new Grid("D:/mesh_auto_lin_2TEST.txt");  //any path to file
         grid.createGrid();
-/*
-        for (int i = 0; i < 5; i++) {
-            System.out.println(grid.grid.get(i)[0] + " @@ " + grid.grid.get(i)[1]);
-        }
-*/
         grid.fitToMesh();
-
-     for(Map.Entry<Integer, HashMap> entry : grid.pointsTree.entrySet()){
-         System.out.println(entry.getKey()+" "+entry.getValue());
-     }
-
 
     }
 }
