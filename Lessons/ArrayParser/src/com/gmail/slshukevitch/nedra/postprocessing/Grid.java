@@ -2,25 +2,21 @@ package com.gmail.slshukevitch.nedra.postprocessing;
 
 import java.io.*;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 class Grid {
     private List<Double> OX = new ArrayList<>();
     private List<Double> OY = new ArrayList<>();
     private List<Double> OZ = new ArrayList<>();
-
     //List for keeping points "as is" - every element is 3-component Array of X,Y and Z coordinates
     public List<Double[]> points = new ArrayList<>();
-
     //some separation values for grid just for test
-    int Xsep = 3;
-    int Ysep = 3;
+    private int Xsep = 3;
+    private int Ysep = 3;
     //List for keeping grid elements
     List<Double[]> grid = new ArrayList<>();
-    //list for keeping elements which are closest to the grid - the result set
-    List<Double[]> elements = new ArrayList<>();
+    Map<Integer, HashMap> pointsTree = new HashMap<>();
+
 
     private Grid(String filename) {
         try {
@@ -88,11 +84,11 @@ class Grid {
         }
 
         //copy values from OX, OY, OZ to points list
-        for(int j=0; j<OX.size();j++){
+        for (int j = 0; j < OX.size(); j++) {
             Double[] coord = new Double[3];
-            coord[0]=OX.get(j);
-            coord[1]=OY.get(j);
-            coord[2]=OZ.get(j);
+            coord[0] = OX.get(j);
+            coord[1] = OY.get(j);
+            coord[2] = OZ.get(j);
             points.add(coord);
         }
 
@@ -105,22 +101,18 @@ class Grid {
     private void fitToMesh() {
         //iterate through all grid, use the simplest linear search
 
-        //https://en.wikipedia.org/wiki/Closest_pair_of_points_problem +
-        //https://en.wikipedia.org/wiki/Nearest_neighbor_search
-
-        Double[] a = new Double[2];
-        double distance = 100.0;  //some big value
         for (int k = 0; k < 5; k++) {  //grid.size()
-            System.out.println("This is Grid element #"+(k+1)+": "+grid.get(k)[0]+"@"+grid.get(k)[1]);
+            //System.out.println("This is Grid element #" + (k + 1) + ": " + grid.get(k)[0] + "@" + grid.get(k)[1]);
+            HashMap<Integer, Double> nodeDistance = new HashMap<>();
             for (int i = 0; i < points.size(); i++) {
-                    System.out.println("Node: "+points.get(i)[0]+"@"+points.get(i)[1]);
-                    System.out.println("Distance between this Node and "+(k+1)+"st element: "+
-                    dist(grid.get(k)[0], points.get(i)[0], grid.get(k)[1], points.get(i)[1]));
-
-                }
+                double temp = dist(grid.get(k)[0], points.get(i)[0], grid.get(k)[1], points.get(i)[1]);
+                nodeDistance.put((i + 1), temp);
+                pointsTree.put(k+1, (nodeDistance));
             }
-            //elements.add(a);
         }
+
+
+    }
 
 
     private double dist(double x1, double x2, double y1, double y2) {
@@ -137,12 +129,11 @@ class Grid {
             System.out.println(grid.grid.get(i)[0] + " @@ " + grid.grid.get(i)[1]);
         }
 */
-
         grid.fitToMesh();
 
-        for (Double[] el : grid.elements) {
-            System.out.println(el[0] + "@" + el[1]);
-        }
+     for(Map.Entry<Integer, HashMap> entry : grid.pointsTree.entrySet()){
+         System.out.println(entry.getKey()+" "+entry.getValue());
+     }
 
 
     }
