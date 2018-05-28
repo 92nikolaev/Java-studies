@@ -11,8 +11,8 @@ class Grid {
     //List for keeping points "as is" - every element is 3-component Array of X,Y and Z coordinates
     public List<Double[]> points = new ArrayList<>();
     //some separation values for grid just for test
-    private int Xsep = 3;
-    private int Ysep = 3;
+    private int Xsep = 25;
+    private int Ysep = 25;
     //List for keeping grid elements
     List<Double[]> grid = new ArrayList<>();
     Map<Integer, HashMap> pointsTree = new HashMap<>();
@@ -93,7 +93,7 @@ class Grid {
     private void fitToMesh() {
 
         //iterate through all grid, use the simplest bruteforce search
-        //this may cause performance issue, i.e. for every grid point we iterate through ALL nodes
+        //!this may cause performance issue, i.e. for every grid point we iterate through ALL nodes!
         //possible solution is https://en.wikipedia.org/wiki/Closest_pair_of_points_problem divide&conquer approach
 
         for (int k = 0; k < grid.size(); k++) {
@@ -115,10 +115,10 @@ class Grid {
                 lengthSet.add(value);    //copy all values in some List
             }
             Collections.sort(lengthSet);
-
             double minLength = lengthSet.get(0);  //minimum length to nearest node for current grid point
             lengthSet.clear();
             int nodeNumber = getNumber(map, minLength);  //node number
+            //TODO write to collection, file, etc.
             System.out.println(nodeNumber+"@"+minLength);
 
         }
